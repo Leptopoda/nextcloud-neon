@@ -53,7 +53,7 @@ class NotificationsBloc extends InteractiveBloc implements NotificationsBlocEven
       'notifications-notifications',
       notifications,
       () async => _client.notifications.listNotifications(),
-      (final response) => response.ocs.data,
+      (final response) => response.ocs.data.toList(),
     );
   }
 
