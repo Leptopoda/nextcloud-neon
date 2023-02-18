@@ -1077,8 +1077,23 @@ bool _isParameterNullable(final bool? required, final dynamic default_) => !(req
 
 String _valueToEscapedValue(final String type, final dynamic value) => type == 'String' ? "'$value'" : value.toString();
 
-String _toLowerCamelCase(final String name) =>
-    name.replaceAll('_', '')[0].toLowerCase() + name.replaceAll('_', '').substring(1);
+String _toCamelCase(final String name) {
+  var result = '';
+  var upperCase = false;
+  var firstCharacter = true;
+  for (final char in name.split('')) {
+    if (char == '_') {
+      upperCase = true;
+    } else if (char == r'$') {
+      result += r'$';
+    } else {
+      result += firstCharacter ? char.toLowerCase() : (upperCase ? char.toUpperCase() : char);
+      upperCase = false;
+      firstCharacter = false;
+    }
+  }
+  return result;
+}
 
 List<String> _descriptionToDocs(final String? description) => [
       if (description != null && description.isNotEmpty) ...[
@@ -1352,7 +1367,7 @@ TypeResult resolveObject(
                   ..returns = refer('Serializer<${state.prefix}$identifier>')
                   ..lambda = true
                   ..static = true
-                  ..body = Code("_\$${_toLowerCamelCase('${state.prefix}$identifier')}Serializer")
+                  ..body = Code("_\$${_toCamelCase('${state.prefix}$identifier')}Serializer")
                   ..type = MethodType.getter,
               ),
             ]);
@@ -1792,7 +1807,7 @@ TypeResult resolveType(
                         ..modifier = FieldModifier.constant
                         ..type = refer('${state.prefix}$identifier')
                         ..assignment = Code(
-                          '_\$${_toLowerCamelCase('${state.prefix}$identifier')}${_toDartName(value.toString())}',
+                          '_\$${_toCamelCase('${state.prefix}$identifier')}${_toDartName(value.toString())}',
                         );
 
                       final hasDifferentName = _toDartName(value.toString()) != value.toString();
@@ -1826,7 +1841,7 @@ TypeResult resolveType(
                     ..returns = refer('BuiltSet<${state.prefix}$identifier>')
                     ..lambda = true
                     ..static = true
-                    ..body = Code('_\$${_toLowerCamelCase('${state.prefix}$identifier')}Values')
+                    ..body = Code('_\$${_toCamelCase('${state.prefix}$identifier')}Values')
                     ..type = MethodType.getter,
                 ),
                 Method(
@@ -1850,7 +1865,7 @@ TypeResult resolveType(
                     ..returns = refer('Serializer<${state.prefix}$identifier>')
                     ..lambda = true
                     ..static = true
-                    ..body = Code("_\$${_toLowerCamelCase('${state.prefix}$identifier')}Serializer")
+                    ..body = Code("_\$${_toCamelCase('${state.prefix}$identifier')}Serializer")
                     ..type = MethodType.getter,
                 ),
               ]),
