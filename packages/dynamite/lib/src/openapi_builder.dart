@@ -1377,30 +1377,6 @@ TypeResult resolveType(
                   'Built<${state.prefix}$identifier, ${state.prefix}${identifier}Builder>',
                 ),
               )
-              /*
-              ..fields.addAll([
-                Field(
-                  (final b) {
-                    b
-                      ..name = '_data'
-                      ..type = refer('dynamic')
-                      ..modifier = FieldModifier.final$;
-                  },
-                ),
-                for (final result in results) ...[
-                  Field(
-                    (final b) {
-                      final s = schema.ofs![results.indexOf(result)];
-                      b
-                        ..name = fields[result.name]
-                        ..type = refer(_makeNullable(result.name, !(schema.allOf?.contains(s) ?? false)))
-                        ..modifier = FieldModifier.final$
-                        ..docs.addAll(_descriptionToDocs(s.description));
-                    },
-                  ),
-                ],
-              ])
-              */
               ..constructors.addAll([
                 Constructor(
                   (final b) => b
@@ -1420,140 +1396,8 @@ TypeResult resolveType(
                     )
                     ..redirect = refer('_\$${state.prefix}$identifier'),
                 ),
-                /*
-                Constructor(
-                  (final b) => b
-                    ..requiredParameters.add(
-                      Parameter(
-                        (final b) => b
-                          ..name = '_data'
-                          ..toThis = true,
-                      ),
-                    )
-                    ..optionalParameters.addAll([
-                      for (final result in results) ...[
-                        Parameter(
-                          (final b) => b
-                            ..name = fields[result.name]!
-                            ..toThis = true
-                            ..named = true
-                            ..required = schema.allOf != null,
-                        ),
-                      ],
-                    ]),
-                ),
-                Constructor(
-                  (final b) {
-                    b
-                      ..factory = true
-                      ..name = 'fromJson'
-                      ..requiredParameters.add(
-                        Parameter(
-                          (final b) => b
-                            ..name = 'data'
-                            ..type = refer('dynamic'),
-                        ),
-                      )
-                      ..body = Code(
-                        <String>[
-                          if (schema.allOf != null) ...[
-                            'return ${state.prefix}$identifier(',
-                            'data,',
-                            for (final result in results) ...[
-                              '${fields[result.name]!}: ${result.deserialize('data')},',
-                            ],
-                            ');',
-                          ] else ...[
-                            for (final result in results) ...[
-                              '${result.name}? ${fields[result.name]!};',
-                            ],
-                            for (final result in results) ...[
-                              if (schema.discriminator != null) ...[
-                                "if (data['${schema.discriminator!.propertyName}'] == '${result.name.replaceFirst(state.prefix, '')}'",
-                                if (schema.discriminator!.mapping != null &&
-                                    schema.discriminator!.mapping!.isNotEmpty) ...[
-                                  for (final key in schema.discriminator!.mapping!.entries
-                                      .where(
-                                        (final entry) =>
-                                            entry.value.endsWith('/${result.name.replaceFirst(state.prefix, '')}'),
-                                      )
-                                      .map((final entry) => entry.key)) ...[
-                                    " ||  data['${schema.discriminator!.propertyName}'] == '$key'",
-                                  ],
-                                ],
-                                ') {',
-                              ],
-                              'try {',
-                              '${fields[result.name]!} = ${result.deserialize('data')};',
-                              '} catch (_) {',
-                              if (schema.discriminator != null) ...[
-                                'rethrow;',
-                              ],
-                              '}',
-                              if (schema.discriminator != null) ...[
-                                '}',
-                              ],
-                            ],
-                            if (schema.oneOf != null) ...[
-                              "assert([${fields.values.join(',')}].where((final x) => x != null).length == 1, 'Need oneOf for \$data');",
-                            ],
-                            'return ${state.prefix}$identifier(',
-                            'data,',
-                            for (final result in results) ...[
-                              '${fields[result.name]!}: ${fields[result.name]!},',
-                            ],
-                            ');',
-                          ],
-                        ].join(),
-                      );
-                  },
-                ),
-                Constructor(
-                  (final b) {
-                    b
-                      ..factory = true
-                      ..lambda = true
-                      ..name = 'fromJsonString'
-                      ..requiredParameters.add(
-                        Parameter(
-                          (final b) => b
-                            ..name = 'data'
-                            ..type = refer('String'),
-                        ),
-                      )
-                      ..body = Code('${state.prefix}$identifier.fromJson(json.decode(data))');
-                  },
-                ),
-                */
               ])
               ..methods.addAll([
-                /* Method(
-                  (final b) => b
-                    ..name = '_validate'
-                    ..returns = refer('void')
-                    ..static = true
-                    ..requiredParameters.add(
-                      Parameter(
-                        (final b) => b
-                          ..type = refer('${state.prefix}${identifier}Builder')
-                          ..name = 'b',
-                      ),
-                    )
-                    ..annotations.add(refer('BuiltValueHook').call([], {'finalizeBuilder': refer('true')}))
-                    ..body = Code(
-                      [
-                        if (schema.oneOf != null) ...[
-                          "assert([${fields.values.map((final e) => 'b._$e').join(',')}].where((final x) => x != null).length == 1, 'Need oneOf for \${b._data}');",
-                        ],
-                        if (schema.allOf != null) ...[
-                          "assert([${fields.values.map((final e) => 'b._$e').join(',')}].where((final x) => x != null).length == ${fields.length}, 'Need allOf for \${b._data}');",
-                        ],
-                        if (schema.anyOf != null) ...[
-                          "assert([${fields.values.map((final e) => 'b._$e').join(',')}].where((final x) => x != null).length >= 1, 'Need anyOf for \${b._data}');",
-                        ],
-                      ].join(),
-                    ),
-                ), */
                 Method(
                   (final b) {
                     b
@@ -1574,31 +1418,6 @@ TypeResult resolveType(
                     },
                   ),
                 ],
-                /*
-                Method(
-                  (final b) => b
-                    ..name = 'toJson'
-                    ..returns = refer('dynamic')
-                    ..lambda = true
-                    ..body = const Code('_data'),
-                ),
-                Method(
-                  (final b) => b
-                    ..name = 'toJsonString'
-                    ..returns = refer('String')
-                    ..lambda = true
-                    ..static = true
-                    ..requiredParameters.add(
-                      Parameter(
-                        (final b) => b
-                          ..name = 'data'
-                          ..type = refer('dynamic'),
-                      ),
-                    )
-                    ..body = const Code('json.encode(data)'),
-                ),
-                */
-
                 Method(
                   (final b) => b
                     ..static = true
