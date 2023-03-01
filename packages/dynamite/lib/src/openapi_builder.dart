@@ -1252,6 +1252,48 @@ TypeResult resolveObject(
                   },
                 ),
               ],
+              Method((final b) {
+                b
+                  ..name = '_defaults'
+                  ..returns = refer('void')
+                  ..static = true
+                  ..lambda = true
+                  ..annotations.add(
+                    refer('BuiltValueHook').call(
+                      [],
+                      {
+                        'initializeBuilder': refer('true'),
+                      },
+                    ),
+                  )
+                  ..requiredParameters.add(
+                    Parameter(
+                      (final b) => b
+                        ..name = 'b'
+                        ..type = refer('${state.prefix}${identifier}Builder'),
+                    ),
+                  );
+                final defaults = <String>[];
+                for (final propertyName in schema.properties!.keys) {
+                  final propertySchema = schema.properties![propertyName]!;
+                  if (propertySchema.default_ != null) {
+                    final value = propertySchema.default_!.toString();
+                    final result = resolveType(
+                      spec,
+                      state,
+                      propertySchema.type!,
+                      propertySchema,
+                    );
+                    defaults.add('..${_toDartName(propertyName)} = ${_valueToEscapedValue(result.name, value)}');
+                  }
+                }
+                b.body = Code(
+                  <String?>[
+                    'b',
+                    ...defaults,
+                  ].join(),
+                );
+              }),
               Method(
                 (final b) => b
                   ..static = true
