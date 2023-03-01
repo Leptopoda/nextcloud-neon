@@ -1718,35 +1718,6 @@ TypeResult resolveType(
               ..methods.addAll([
                 Method(
                   (final b) => b
-                    ..name = 'fromValue'
-                    ..returns = refer('${state.prefix}$identifier')
-                    ..lambda = true
-                    ..static = true
-                    ..annotations.add(
-                      refer('Deprecated').call([refer("'Use ${state.prefix}$identifier.valueOf instead'")]),
-                    )
-                    ..requiredParameters.add(
-                      Parameter(
-                        (final b) => b
-                          ..name = 'name'
-                          ..type = refer(result!.name),
-                      ),
-                    )
-                    ..body = const Code('valueOf(name)'),
-                ),
-                Method(
-                  (final b) => b
-                    ..name = 'value'
-                    ..returns = refer('String')
-                    ..lambda = true
-                    ..type = MethodType.getter
-                    ..annotations.add(
-                      refer('Deprecated').call([refer("'Use ${state.prefix}$identifier.name instead'")]),
-                    )
-                    ..body = const Code('name'),
-                ),
-                Method(
-                  (final b) => b
                     ..name = 'values'
                     ..returns = refer('BuiltSet<${state.prefix}$identifier>')
                     ..lambda = true
