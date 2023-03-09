@@ -1351,7 +1351,7 @@ TypeResult resolveType(
 }) {
   TypeResult? result;
   if (schema.ref == null && schema.ofs == null && schema.type == null) {
-    return TypeResultBase('JsonObject');
+    return TypeResultObject('JsonObject');
   }
   if (schema.ref != null) {
     final name = schema.ref!.split('/').last;
@@ -1595,8 +1595,8 @@ TypeResult resolveType(
           );
         } else {
           result = TypeResultBuiltList(
-            'BuiltList',
-            TypeResultBase('JsonObject'),
+            'BuiltList<JsonObject>',
+            TypeResultObject('JsonObject'),
           );
         }
         break;
@@ -1604,8 +1604,8 @@ TypeResult resolveType(
         if (schema.properties == null) {
           if (schema.additionalProperties != null) {
             if (schema.additionalProperties is EmptySchema) {
-              result = TypeResultMap(
-                'Map<String, dynamic>',
+              result = TypeResultBuiltMap(
+                'BuiltMap<String, Object?>',
                 TypeResultBase('JsonObject'),
               );
             } else {
@@ -1616,8 +1616,8 @@ TypeResult resolveType(
                 schema.additionalProperties!,
                 extraJsonSerializableValues: extraJsonSerializableValues,
               );
-              result = TypeResultMap(
-                'Map<String, ${subResult.name}>',
+              result = TypeResultBuiltMap(
+                'BuiltMap<String, ${subResult.name}>',
                 TypeResultBase('JsonObject'),
               );
             }
@@ -1627,8 +1627,8 @@ TypeResult resolveType(
           break;
         }
         if (schema.properties!.isEmpty) {
-          result = TypeResultMap(
-            'Map<String, dynamic>',
+          result = TypeResultBuiltMap(
+            'BuiltMap<String, Object?>',
             TypeResultBase('JsonObject'),
           );
           break;

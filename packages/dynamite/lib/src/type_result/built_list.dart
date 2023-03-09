@@ -11,7 +11,7 @@ class TypeResultBuiltList extends TypeResult {
   final bool fromContentString;
 
   @override
-  String serialize(final String object) => '$object.map((final e) => ${subType.serialize('e')}).toBuiltList()';
+  String serialize(final String object) => '$object.map((final e) => ${subType.serialize('e')})';
 
   @override
   String encode(
@@ -20,7 +20,7 @@ class TypeResultBuiltList extends TypeResult {
     final String? mimeType,
   }) {
     if (onlyChildren) {
-      return '$object.map((final e) => ${subType.encode('e', mimeType: mimeType)}).toBuiltList()';
+      return '$object.map((final e) => ${subType.encode('e', mimeType: mimeType)})';
     }
 
     switch (mimeType) {
@@ -34,8 +34,8 @@ class TypeResultBuiltList extends TypeResult {
   }
 
   @override
-  String deserialize(final String object) =>
-      '($object as List).map((final e) => ${subType.deserialize('e')}).toBuiltList()';
+  String deserialize(final String object, {final bool toBuilder = false}) =>
+      '$name(($object as List).map((final e) => ${subType.deserialize('e')}))${toBuilder ? '.toBuilder()' : ''}';
 
   @override
   String decode(final String object) => 'json.decode($object as String)';

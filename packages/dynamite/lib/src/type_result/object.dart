@@ -10,6 +10,9 @@ class TypeResultObject extends TypeResult {
 
   @override
   String serialize(final String object) {
+    if (name == 'JsonObject') {
+      return '$object.toString()';
+    }
     if (fromContentString) {
       return '$name.toJsonString($object)';
     }
@@ -33,11 +36,14 @@ class TypeResultObject extends TypeResult {
   }
 
   @override
-  String deserialize(final String object) {
-    if (fromContentString) {
-      return '$name.fromJsonString($object as String)';
+  String deserialize(final String object, {final bool toBuilder = false}) {
+    if (name == 'JsonObject') {
+      return 'JsonObject($object)';
     }
-    return '$name.fromJson($object as Map<String, dynamic>)';
+    if (fromContentString) {
+      return '$name.fromJsonString($object as String)${toBuilder ? '.toBuilder()' : ''}';
+    }
+    return '$name.fromJson($object as Map<String, dynamic>)${toBuilder ? '.toBuilder()' : ''}';
   }
 
   @override
