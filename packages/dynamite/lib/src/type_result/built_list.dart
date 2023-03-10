@@ -1,7 +1,7 @@
 part of '../../dynamite.dart';
 
-class TypeResultList extends TypeResult {
-  TypeResultList(
+class TypeResultBuiltList extends TypeResult {
+  TypeResultBuiltList(
     super.name,
     this.subType, {
     this.fromContentString = false,
@@ -11,7 +11,7 @@ class TypeResultList extends TypeResult {
   final bool fromContentString;
 
   @override
-  String serialize(final String object) => '$object.map((final e) => ${subType.serialize('e')}).toList()';
+  String serialize(final String object) => '$object.map((final e) => ${subType.serialize('e')}).toBuiltList()';
 
   @override
   String encode(
@@ -20,7 +20,7 @@ class TypeResultList extends TypeResult {
     final String? mimeType,
   }) {
     if (onlyChildren) {
-      return '$object.map((final e) => ${subType.encode('e', mimeType: mimeType)}).toList()';
+      return '$object.map((final e) => ${subType.encode('e', mimeType: mimeType)}).toBuiltList()';
     }
 
     switch (mimeType) {
@@ -34,7 +34,8 @@ class TypeResultList extends TypeResult {
   }
 
   @override
-  String deserialize(final String object) => '($object as List).map((final e) => ${subType.deserialize('e')}).toList()';
+  String deserialize(final String object) =>
+      '($object as List).map((final e) => ${subType.deserialize('e')}).toBuiltList()';
 
   @override
   String decode(final String object) => 'json.decode($object as String)';
