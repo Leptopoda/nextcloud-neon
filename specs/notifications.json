@@ -127,25 +127,11 @@
           "subjectRich": {
             "type": "string"
           },
-          "subjectRichParameters": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {}
-              }
-            ]
-          },
+          "subjectRichParameters": {},
           "messageRich": {
             "type": "string"
           },
-          "messageRichParameters": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {}
-              }
-            ]
-          },
+          "messageRichParameters": {},
           "icon": {
             "type": "string"
           },

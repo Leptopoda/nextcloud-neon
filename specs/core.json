@@ -941,13 +941,7 @@
                     "source": {
                       "type": "string"
                     },
-                    "status": {
-                      "anyOf": [
-                        {
-                          "type": "string"
-                        }
-                      ]
-                    },
+                    "status": {},
                     "subline": {
                       "type": "string"
                     },

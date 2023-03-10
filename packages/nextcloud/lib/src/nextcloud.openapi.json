@@ -941,13 +941,7 @@
                     "source": {
                       "type": "string"
                     },
-                    "status": {
-                      "anyOf": [
-                        {
-                          "type": "string"
-                        }
-                      ]
-                    },
+                    "status": {},
                     "subline": {
                       "type": "string"
                     },
@@ -1305,25 +1299,11 @@
           "subjectRich": {
             "type": "string"
           },
-          "subjectRichParameters": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {}
-              }
-            ]
-          },
+          "subjectRichParameters": {},
           "messageRich": {
             "type": "string"
           },
-          "messageRichParameters": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {}
-              }
-            ]
-          },
+          "messageRichParameters": {},
           "icon": {
             "type": "string"
           },
@@ -1732,8 +1712,7 @@
         "required": [
           "id",
           "icon",
-          "message",
-          "clearAt"
+          "message"
         ],
         "properties": {
           "id": {
@@ -1746,48 +1725,48 @@
             "type": "string"
           },
           "clearAt": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/UserStatusClearAt"
-              },
-              {
-                "type": "integer",
-                "description": "Time as unix timestamp"
-              }
-            ]
+            "$ref": "#/components/schemas/UserStatusClearAt"
           }
         }
       },
       "UserStatusClearAt": {
-        "type": "object",
-        "required": [
-          "type",
-          "time"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "period",
-              "end-of"
-            ]
-          },
-          "time": {
-            "oneOf": [
-              {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "time"
+            ],
+            "properties": {
+              "type": {
                 "type": "string",
                 "enum": [
-                  "day",
-                  "week"
+                  "period",
+                  "end-of"
                 ]
               },
-              {
-                "type": "integer",
-                "description": "Time offset in seconds"
+              "time": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "day",
+                      "week"
+                    ]
+                  },
+                  {
+                    "type": "integer",
+                    "description": "Time offset in seconds"
+                  }
+                ]
               }
-            ]
+            }
+          },
+          {
+            "type": "integer",
+            "description": "Time as unix timestamp"
           }
-        }
+        ]
       },
       "UserStatusType": {
         "type": "string",
@@ -1816,11 +1795,7 @@
                 "$ref": "#/components/schemas/OCSMeta"
               },
               "data": {
-                "anyOf": [
-                  {
-                    "$ref": "#/components/schemas/UserStatusStatus"
-                  }
-                ]
+                "$ref": "#/components/schemas/UserStatusStatus"
               }
             }
           }
@@ -1869,11 +1844,7 @@
                 "$ref": "#/components/schemas/OCSMeta"
               },
               "data": {
-                "anyOf": [
-                  {
-                    "$ref": "#/components/schemas/UserStatusPublicStatus"
-                  }
-                ]
+                "$ref": "#/components/schemas/UserStatusPublicStatus"
               }
             }
           }
@@ -1884,7 +1855,6 @@
         "required": [
           "userId",
           "messageIsPredefined",
-          "clearAt",
           "status",
           "statusIsUserDefined"
         ],
@@ -1905,15 +1875,7 @@
             "type": "string"
           },
           "clearAt": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/UserStatusClearAt"
-              },
-              {
-                "type": "integer",
-                "description": "Time as unix timestamp"
-              }
-            ]
+            "$ref": "#/components/schemas/UserStatusClearAt"
           },
           "status": {
             "$ref": "#/components/schemas/UserStatusType"
@@ -1927,7 +1889,6 @@
         "type": "object",
         "required": [
           "userId",
-          "clearAt",
           "status"
         ],
         "properties": {
@@ -1941,15 +1902,7 @@
             "type": "string"
           },
           "clearAt": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/UserStatusClearAt"
-              },
-              {
-                "type": "integer",
-                "description": "Time as unix timestamp"
-              }
-            ]
+            "$ref": "#/components/schemas/UserStatusClearAt"
           },
           "status": {
             "$ref": "#/components/schemas/UserStatusType"

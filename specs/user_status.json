@@ -108,8 +108,7 @@
         "required": [
           "id",
           "icon",
-          "message",
-          "clearAt"
+          "message"
         ],
         "properties": {
           "id": {
@@ -122,48 +121,48 @@
             "type": "string"
           },
           "clearAt": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ClearAt"
-              },
-              {
-                "type": "integer",
-                "description": "Time as unix timestamp"
-              }
-            ]
+            "$ref": "#/components/schemas/ClearAt"
           }
         }
       },
       "ClearAt": {
-        "type": "object",
-        "required": [
-          "type",
-          "time"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "period",
-              "end-of"
-            ]
-          },
-          "time": {
-            "oneOf": [
-              {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "type",
+              "time"
+            ],
+            "properties": {
+              "type": {
                 "type": "string",
                 "enum": [
-                  "day",
-                  "week"
+                  "period",
+                  "end-of"
                 ]
               },
-              {
-                "type": "integer",
-                "description": "Time offset in seconds"
+              "time": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "day",
+                      "week"
+                    ]
+                  },
+                  {
+                    "type": "integer",
+                    "description": "Time offset in seconds"
+                  }
+                ]
               }
-            ]
+            }
+          },
+          {
+            "type": "integer",
+            "description": "Time as unix timestamp"
           }
-        }
+        ]
       },
       "Type": {
         "type": "string",
@@ -192,11 +191,7 @@
                 "$ref": "#/components/schemas/OCSMeta"
               },
               "data": {
-                "anyOf": [
-                  {
-                    "$ref": "#/components/schemas/Status"
-                  }
-                ]
+                "$ref": "#/components/schemas/Status"
               }
             }
           }
@@ -245,11 +240,7 @@
                 "$ref": "#/components/schemas/OCSMeta"
               },
               "data": {
-                "anyOf": [
-                  {
-                    "$ref": "#/components/schemas/PublicStatus"
-                  }
-                ]
+                "$ref": "#/components/schemas/PublicStatus"
               }
             }
           }
@@ -260,7 +251,6 @@
         "required": [
           "userId",
           "messageIsPredefined",
-          "clearAt",
           "status",
           "statusIsUserDefined"
         ],
@@ -281,15 +271,7 @@
             "type": "string"
           },
           "clearAt": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ClearAt"
-              },
-              {
-                "type": "integer",
-                "description": "Time as unix timestamp"
-              }
-            ]
+            "$ref": "#/components/schemas/ClearAt"
           },
           "status": {
             "$ref": "#/components/schemas/Type"
@@ -303,7 +285,6 @@
         "type": "object",
         "required": [
           "userId",
-          "clearAt",
           "status"
         ],
         "properties": {
@@ -317,15 +298,7 @@
             "type": "string"
           },
           "clearAt": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/ClearAt"
-              },
-              {
-                "type": "integer",
-                "description": "Time as unix timestamp"
-              }
-            ]
+            "$ref": "#/components/schemas/ClearAt"
           },
           "status": {
             "$ref": "#/components/schemas/Type"

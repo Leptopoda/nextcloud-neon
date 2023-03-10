@@ -79,7 +79,7 @@ Future run(final DockerImage image) async {
       expect(response.ocs.data[0].label, 'admin');
       expect(response.ocs.data[0].icon, 'icon-user');
       expect(response.ocs.data[0].source, 'users');
-      expect(response.ocs.data[0].status.string, isNull);
+      expect(response.ocs.data[0].status.asList, isEmpty);
       expect(response.ocs.data[0].subline, '');
       expect(response.ocs.data[0].shareWithDisplayNameUnique, 'admin@example.com');
 
@@ -87,7 +87,7 @@ Future run(final DockerImage image) async {
       expect(response.ocs.data[1].label, 'User Two');
       expect(response.ocs.data[1].icon, 'icon-user');
       expect(response.ocs.data[1].source, 'users');
-      expect(response.ocs.data[1].status.string, isNull);
+      expect(response.ocs.data[1].status.asList, isEmpty);
       expect(response.ocs.data[1].subline, '');
       expect(response.ocs.data[1].shareWithDisplayNameUnique, 'user2');
 
@@ -95,7 +95,7 @@ Future run(final DockerImage image) async {
       expect(response.ocs.data[2].label, 'admin');
       expect(response.ocs.data[2].icon, '');
       expect(response.ocs.data[2].source, 'groups');
-      expect(response.ocs.data[2].status.string, isEmpty);
+      expect(response.ocs.data[2].status.asString, isEmpty);
       expect(response.ocs.data[2].subline, '');
       expect(response.ocs.data[2].shareWithDisplayNameUnique, '');
     });
