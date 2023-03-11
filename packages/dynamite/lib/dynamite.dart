@@ -12,6 +12,7 @@ import 'package:dynamite/src/models/schema.dart';
 import 'package:path/path.dart' as p;
 
 part 'src/openapi_builder.dart';
+part 'src/type_result/all_of.dart';
 part 'src/type_result/base.dart';
 part 'src/type_result/enum.dart';
 part 'src/type_result/built_list.dart';
